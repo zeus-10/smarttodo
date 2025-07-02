@@ -1,0 +1,23 @@
+# Use Node.js 18 Alpine image
+FROM node:18-alpine
+
+# Set work directory
+WORKDIR /app
+
+# Configure npm to handle SSL issues
+RUN npm config set strict-ssl false
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including dev dependencies)
+RUN npm ci
+
+# Copy source code
+COPY . .
+
+# Expose port
+EXPOSE 3000
+
+# Start the development server using npx
+CMD ["npx", "next", "dev"]
