@@ -242,50 +242,7 @@ def generate_daily_report():
 - Request/response interceptors
 - Error handling
 
-## 🐳 Docker Infrastructure
 
-### 1. Development Environment (`docker-compose.dev.yml`)
-
-**Services**:
-- `db`: PostgreSQL 15 database
-- `redis`: Redis 7 for Celery
-- `web`: Django development server
-- `frontend`: Next.js development server
-- `celery`: Celery worker
-- `celery-beat`: Celery scheduler
-- `flower`: Celery monitoring
-
-**Features**:
-- Hot reloading for development
-- Volume mounting for live code changes
-- Development-specific settings
-- Health checks for dependencies
-
-### 2. Production Environment (`docker-compose.yml`)
-
-**Services**:
-- Same services as development but optimized for production
-- Gunicorn for Django (instead of development server)
-- Production Next.js build
-- Optimized settings
-
-### 3. Docker Images
-
-#### Backend (`Dockerfile`)
-```dockerfile
-FROM python:3.11-slim
-# Python dependencies installation
-# Django application setup
-# Gunicorn configuration
-```
-
-#### Frontend (`frontend/Dockerfile`)
-```dockerfile
-FROM node:18-alpine
-# Node.js dependencies
-# Next.js build process
-# Production server
-```
 
 ## 🔄 Data Flow
 
@@ -304,43 +261,7 @@ Database Change → Django Signal → Celery Task → Frontend Update (via polli
 Celery Beat → Scheduled Task → Task Processing → Database Update → Notification
 ```
 
-## 🔐 Security Features
 
-### 1. Authentication
-- JWT (JSON Web Tokens) for API authentication
-- Token refresh mechanism
-- Secure token storage
-
-### 2. Authorization
-- Role-based access control
-- Permission-based views
-- API endpoint protection
-
-### 3. Data Protection
-- CORS configuration
-- Input validation
-- SQL injection prevention
-- XSS protection
-
-## 📊 Monitoring & Observability
-
-### 1. Celery Flower
-- Real-time task monitoring
-- Worker status tracking
-- Task execution history
-- Performance metrics
-
-### 2. Django Admin
-- Database management
-- User administration
-- System configuration
-- Data inspection
-
-### 3. Logging
-- Application logs
-- Error tracking
-- Performance monitoring
-- Debug information
 
 ## 🚀 Deployment
 
@@ -356,16 +277,7 @@ docker-compose -f docker-compose.dev.yml logs -f [service_name]
 docker-compose -f docker-compose.dev.yml down
 ```
 
-### Production
-```bash
-# Start production environment
-docker-compose up --build
 
-# Scale services
-docker-compose up --scale celery=3
-
-# Backup database
-docker-compose exec db pg_dump -U postgres smart_todo_db > backup.sql
 ```
 
 ## 🛠️ Development Workflow
@@ -393,25 +305,6 @@ docker-compose -f docker-compose.dev.yml exec web python manage.py makemigration
 docker-compose -f docker-compose.dev.yml exec web python manage.py migrate
 ```
 
-## 📈 Performance Optimization
-
-### 1. Backend
-- Database query optimization
-- Caching with Redis
-- Pagination for large datasets
-- Background task processing
-
-### 2. Frontend
-- Code splitting
-- Image optimization
-- Bundle size optimization
-- Caching strategies
-
-### 3. Infrastructure
-- Container resource limits
-- Load balancing
-- Database connection pooling
-- CDN integration
 
 ## 🔧 Configuration
 
@@ -443,65 +336,5 @@ JWT_REFRESH_TOKEN_LIFETIME=1
 CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 ```
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
 
 
-## 🔧 Troubleshooting
-
-### Common Issues
-
-
-
-#### Frontend Not Starting
-If the frontend container fails to start:
-```bash
-# Rebuild the frontend container
-docker-compose -f docker-compose.dev.yml build frontend --no-cache
-docker-compose -f docker-compose.dev.yml up frontend
-```
-
-#### Database Connection Issues
-If Django can't connect to PostgreSQL:
-```bash
-# Check if database container is running
-docker-compose -f docker-compose.dev.yml ps
-
-# Restart the database
-docker-compose -f docker-compose.dev.yml restart db
-```
-
-#### Permission Issues
-If you encounter volume mounting permission errors:
-```bash
-# The development setup avoids volume mounts to prevent permission issues
-# Use the provided docker-compose.dev.yml configuration
-```
-
-### Logs and Debugging
-```bash
-# View all service logs
-docker-compose -f docker-compose.dev.yml logs
-
-# View specific service logs
-docker-compose -f docker-compose.dev.yml logs [service_name]
-
-# Follow logs in real-time
-docker-compose -f docker-compose.dev.yml logs -f [service_name]
-```
-
-## 🆘 Support
-
-For support and questions:
-- Create an issue in the repository
-- Check the documentation
-- Review the logs for debugging
-
----
-
-**Smart Todo** - Empowering productivity through intelligent task management.
