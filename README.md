@@ -31,11 +31,7 @@ The application follows a microservices architecture with the following componen
 - **Frontend**: Modern Next.js interface with Tailwind CSS
 - **Monitoring**: Celery Flower for task monitoring and Django Admin
 
-### 🔄 Recent Updates
-- **AI Features Removed**: Simplified the application by removing AI-powered features
-- **Frontend Integration**: Successfully integrated Next.js frontend with Docker
-- **SSL Configuration**: Fixed corporate network SSL certificate issues
-- **Volume Mounting**: Resolved Docker permission issues for development
+
 
 ## 🚀 Quick Start
 
@@ -460,12 +456,7 @@ CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 
 ### Common Issues
 
-#### SSL Certificate Errors
-If you encounter SSL certificate errors during Docker builds:
-```bash
-# The Dockerfiles are configured to handle corporate SSL issues
-# If problems persist, check your corporate proxy settings
-```
+
 
 #### Frontend Not Starting
 If the frontend container fails to start:
